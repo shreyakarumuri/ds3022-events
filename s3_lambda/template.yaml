@@ -1,0 +1,49 @@
+# Session 3: the resources the pipeline needs, as code (CloudFormation).
+# Same idea as Neal's dp4-launch-template.yaml. Deploy locally with  python s3_lambda/stack.py create
+# On real AWS the bucket name must be globally unique (e.g. <computing id>-sensor-files).
+Parameters:
+  BucketName:
+    Type: String
+    Default: ds3022-sensor-files
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
+  Readings:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Readings
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: device_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: device_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+
+  FileLog:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: FileLog
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: file_key
+          AttributeType: S
+      KeySchema:
+        - AttributeName: file_key
+          KeyType: HASH
+
+Outputs:
+  BucketName:
+    Value: !Ref Bucket
+  ReadingsTable:
+    Value: !Ref Readings
+  FileLogTable:
+    Value: !Ref FileLog

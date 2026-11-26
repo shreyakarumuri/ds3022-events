@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::mst3k-access-events/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["TODO: only the DynamoDB actions your code calls on the access table"],
+      "Resource": "arn:aws:dynamodb:*:*:table/access"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["TODO: only the DynamoDB actions your code calls on the file_log table"],
+      "Resource": "arn:aws:dynamodb:*:*:table/file_log"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"],
+      "Resource": "arn:aws:logs:*:*:*"
+    }
+  ]
+}

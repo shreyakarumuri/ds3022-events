@@ -1,0 +1,10 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+data/*.json
+!data/sample_commits_boto3_boto3.json
+out/
+.chalice/deployments/
+.chalice/deployed/
+.chalice/venv/

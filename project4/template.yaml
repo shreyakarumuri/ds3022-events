@@ -1,0 +1,54 @@
+# Data Project 4: the resources your pipeline needs, as code (CloudFormation).
+# Deploy with  python kit/stack.py create   (after a key change:  python kit/stack.py recreate)
+#
+# TODO (checkpoint A): the 'access' table below still has the starting key from last
+# year's project (event_key + access_time). It cannot answer the three access patterns
+# in BRIEF.md with a Query. Replace AttributeDefinitions and KeySchema with YOUR design.
+# Declare only key attributes. Keep TableName: access (the app and the tests use it),
+# or change it everywhere (.chalice/config.json, policy-dev.json).
+Parameters:
+  BucketName:
+    Type: String
+    Default: ds3022-access-events
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+
+  Access:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: access
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: event_key
+          AttributeType: S
+        - AttributeName: access_time
+          AttributeType: S
+      KeySchema:
+        - AttributeName: event_key
+          KeyType: HASH
+        - AttributeName: access_time
+          KeyType: RANGE
+
+  FileLog:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: file_log
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: file_key
+          AttributeType: S
+      KeySchema:
+        - AttributeName: file_key
+          KeyType: HASH
+
+Outputs:
+  BucketName:
+    Value: !Ref Bucket
+  AccessTable:
+    Value: !Ref Access
+  FileLogTable:
+    Value: !Ref FileLog

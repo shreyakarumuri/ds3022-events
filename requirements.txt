@@ -1,0 +1,7 @@
+# DS 3022 Event-Driven Computing (Fall 2026)
+boto3
+moto[server]     # local AWS emulator: run with  moto_server -p 9324
+chalice            # Lambda framework (Session 3)
+requests
+python-dotenv
+pytest

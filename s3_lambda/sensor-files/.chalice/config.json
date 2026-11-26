@@ -1,0 +1,29 @@
+{
+  "version": "2.0",
+  "app_name": "sensor-files",
+  "stages": {
+    "local": {
+      "environment_variables": {
+        "APP_BUCKET_NAME": "ds3022-sensor-files",
+        "READINGS_TABLE": "Readings",
+        "FILELOG_TABLE": "FileLog",
+        "AWS_ENDPOINT_URL": "http://127.0.0.1:9324",
+        "AWS_DEFAULT_REGION": "us-east-1",
+        "AWS_ACCESS_KEY_ID": "test",
+        "AWS_SECRET_ACCESS_KEY": "test"
+      }
+    },
+    "dev": {
+      "environment_variables": {
+        "APP_BUCKET_NAME": "mst3k-sensor-files",
+        "READINGS_TABLE": "Readings",
+        "FILELOG_TABLE": "FileLog"
+      },
+      "lambda_memory_size": 128,
+      "lambda_timeout": 60,
+      "api_gateway_stage": "api",
+      "autogen_policy": false,
+      "iam_policy_file": "policy-dev.json"
+    }
+  }
+}
